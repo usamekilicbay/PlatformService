@@ -28,7 +28,7 @@ namespace PlatformService.Controllers
             return Ok(platformReadDtos);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetPlatformById")]
         public async Task<ActionResult<PlatformReadDto>> GetPlatformById(int id)
         {
             Platform platform = await _platformRepository.Get(id);
