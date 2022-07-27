@@ -38,5 +38,17 @@ namespace PlatformService.Controllers
                 ? Ok(platformReadDto)
                 : NotFound();
         }
+
+        [HttpPost]
+        public async Task<ActionResult<PlatformReadDto>> AddPlatform(PlatformCreateDto platformCreateDto)
+        {
+            Platform platform = _mapper.Map<Platform>(platformCreateDto);
+            await _platformRepository.Add(platform);
+            await _platformRepository.SaveChanges();
+
+            PlatformReadDto platformReadDto = _mapper.Map<PlatformReadDto>(platform);
+
+            return CreatedAtRoute(nameof(GetPlatformById), new { platformReadDto.Id }, platformReadDto);
+        }
     }
 }
